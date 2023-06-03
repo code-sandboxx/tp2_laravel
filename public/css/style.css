@@ -1,0 +1,14 @@
+.background {
+    background-image: url('/img/leone-venter-VieM9BdZKFo-unsplash.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh; 
+}    
+
+.primary-bg-color-green{
+    background-color: rgb(159, 218, 172);
+}
+
+.color-brown{
+    color: rgb(124, 41, 41);
+}

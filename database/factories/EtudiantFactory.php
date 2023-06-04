@@ -24,7 +24,7 @@ class EtudiantFactory extends Factory
             'phone'=>$this->faker->phoneNumber,
             'email'=>$this->faker->unique()->email,
             'date_de_naissance'=>$this->faker->dateTimeBetween($minBirthdate, 'now')->format('Y-m-d'),
-            'ville_id'=>Ville::factory()
+            'ville_id' => Ville::inRandomOrder()->first()->id,
         ];
     }
 }

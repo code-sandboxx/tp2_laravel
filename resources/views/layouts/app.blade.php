@@ -10,7 +10,7 @@
     
 
 </head>
-<body class="background vh-100">
+<body class="background w-100">
 
     <nav class="navbar primary-bg-color-green navbar-expand-lg">
         <div class="container-fluid">

@@ -17,3 +17,5 @@ use App\Http\Controllers\EtudiantController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('repertoire-etudiants', [EtudiantController::class, 'index'])->name('etudiant.index');

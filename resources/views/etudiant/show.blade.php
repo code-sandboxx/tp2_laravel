@@ -5,6 +5,7 @@
 
 
 <div class="card m-5 col-10">
+
     <div class="card-header p-4">
         <h4 class="fs-4 text-center">Etudiant numero {{$etudiant->id}}</h4>
     </div>

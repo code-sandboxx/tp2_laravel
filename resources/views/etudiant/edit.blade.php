@@ -14,16 +14,16 @@
                     <div class="card-body">
 
                         <label for="nom">Nom</label>
-                        <input type="text" id="nom" name="nom" class="form-control mb-3"/>
+                        <input type="text" id="nom" name="nom" value="{{ $etudiant->nom }}" class="form-control mb-3"/>
 
                         <label for="adresse">Adresse</label>
-                        <textarea name="adresse" id="adresse" class="form-control mb-3"></textarea>
+                        <textarea name="adresse" id="adresse" class="form-control mb-3">{{ $etudiant->adresse }}</textarea>
 
                         <label for="email">Adresse courriel</label>
-                        <input type="email" id="email" name="email" class="form-control mb-3"/>
+                        <input type="email" id="email" name="email" value="{{ $etudiant->email }}" class="form-control mb-3"/>
 
                         <label for="phone">Téléphone</label>
-                        <input type="tel" id="phone" name="phone" class="form-control mb-3"/>
+                        <input type="tel" id="phone" name="phone" value="{{ $etudiant->phone }}" class="form-control mb-3"/>
 
                         <label for="ville_id">Ville</label>
                         <select name="ville_id" id="ville_id" class="form-control mb-3">
@@ -33,7 +33,7 @@
                         </select>
 
                         <label for="date_de_naissance">Date de naissance</label>                      
-                        <input type="date" id="date_de_naissance" name="date_de_naissance" class="form-control mb-3">
+                        <input type="date" id="date_de_naissance" name="date_de_naissance" value="{{ $etudiant->date_de_naissance }}" class="form-control mb-3">
 
                     </div>
 

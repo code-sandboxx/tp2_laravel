@@ -24,7 +24,7 @@
 
                             <div class="card d-flex flex-column p-3 bg-light">
                                 <p class="fs-5">Ajouter un étudiant</p>
-                                <a href="{{route('etudiant.index')}}" class="btn btn-success btn-sm">Ajouter</a>
+                                <a href="{{route('etudiant.create')}}" class="btn btn-success btn-sm">Ajouter</a>
                             </div>   
 
                         </div>

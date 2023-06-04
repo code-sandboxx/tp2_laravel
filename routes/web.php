@@ -19,3 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('repertoire-etudiants', [EtudiantController::class, 'index'])->name('etudiant.index');
+
+Route::get('etudiant-create', [EtudiantController::class, 'create'])->name('etudiant.create');
+
+Route::post('etudiant-create', [EtudiantController::class, 'store']);

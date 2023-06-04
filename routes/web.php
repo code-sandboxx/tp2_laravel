@@ -23,3 +23,5 @@ Route::get('repertoire-etudiants', [EtudiantController::class, 'index'])->name('
 Route::get('etudiant-create', [EtudiantController::class, 'create'])->name('etudiant.create');
 
 Route::post('etudiant-create', [EtudiantController::class, 'store']);
+
+Route::get('etudiant/{etudiant}', [EtudiantController::class, 'show'])->name('etudiant.show');

@@ -49,8 +49,7 @@ class EtudiantController extends Controller
             'ville_id' => $request->ville_id
         ]);
 
-        //return redirect(route('etudiant.show', $newEtudiant->id));
-        return $newEtudiant;
+        return redirect(route('etudiant.show', $newEtudiant->id));        
     }
 
     /**
@@ -60,8 +59,8 @@ class EtudiantController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Etudiant $etudiant)
-    {
-        //
+    {        
+        return view ('etudiant.show', ['etudiant' => $etudiant]);
     }
 
     /**

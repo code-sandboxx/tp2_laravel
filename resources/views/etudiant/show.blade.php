@@ -17,7 +17,7 @@
 
                     <a href="{{route('etudiant.index')}}" class="btn btn-outline-primary col-1">Retourner</a>
                     
-                    <a href="" class="btn btn-success col-1">Modifier</a>  
+                    <a href="{{route('etudiant.edit', $etudiant->id)}}" class="btn btn-success col-1">Modifier</a>  
                     
                     <button type="button" class="btn btn-danger col-1" data-bs-toggle="modal" data-bs-target="#modalDelete">Effacer</button>
                     

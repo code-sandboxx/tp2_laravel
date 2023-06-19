@@ -18,6 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
@@ -41,4 +42,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Établir une relation dépendante entre chaque étudiant et user
+
+    public function etudiant()
+    {
+        return $this->hasOne(Etudiant::class);
+    }
 }

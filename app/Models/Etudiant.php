@@ -22,4 +22,11 @@ class Etudiant extends Model
         return $this->hasOne('App\Models\Ville', 'id', 'ville_id');
     }
 
+    // Établir une relation dépendante entre chaque étudiant et user
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

@@ -9,11 +9,9 @@ class Etudiant extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nom',
+    protected $fillable = [       
         'adresse',
-        'phone',
-        'email',
+        'phone',       
         'date_de_naissance',
         'ville_id'
     ];
@@ -26,7 +24,7 @@ class Etudiant extends Model
     
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id', 'id');
     }
 
 }

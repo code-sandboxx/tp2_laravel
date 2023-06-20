@@ -32,7 +32,7 @@
                             <div class="col-md-6">
                                 <ul>
                                     @forelse($etudiants->chunk(ceil($etudiants->count() / 2))[0] as $etudiant)
-                                        <li class="list-unstyled"><a href="{{ route('etudiant.show', $etudiant->id)}}" class="custom-link color-brown fs-6" >{{$etudiant->nom}}</a></li>
+                                        <li class="list-unstyled"><a href="{{ route('etudiant.show', $etudiant->id)}}" class="custom-link color-brown fs-6" >{{$etudiant->name}}</a></li>
                                     @empty
                                         <li class="text-danger">Aucun article trouvé</li>
                                     @endforelse
@@ -41,7 +41,7 @@
                             <div class="col-md-6">
                                 <ul>
                                     @forelse($etudiants->chunk(ceil($etudiants->count() / 2))[1] as $etudiant)
-                                        <li class="list-unstyled"><a href="{{ route('etudiant.show', $etudiant->id)}}" class="custom-link color-brown fs-6" >{{$etudiant->nom}}</a></li>
+                                        <li class="list-unstyled"><a href="{{ route('etudiant.show', $etudiant->id)}}" class="custom-link color-brown fs-6" >{{$etudiant->name}}</a></li>
                                     @empty
                                         <li class="text-danger">Aucun article trouvé</li>
                                     @endforelse

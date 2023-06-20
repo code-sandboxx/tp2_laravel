@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EtudiantController;
+use App\Http\Controllers\CustomAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,13 @@ Route::get('etudiant-edit/{etudiant}', [EtudiantController::class, 'edit'])->nam
 Route::put('etudiant-edit/{etudiant}', [EtudiantController::class, 'update']);
 
 Route::delete('etudiant/{etudiant}', [EtudiantController::class, 'destroy']);
+
+Route::get('/login', [CustomAuthController::class, 'index'])->name('login');
+
+Route::post('/login', [CustomAuthController::class, 'authentication'])->name('login.authentication');
+
+Route::get('/registration', [CustomAuthController::class, 'create'])->name('user.registration');
+
+Route::post('/registration', [CustomAuthController::class, 'store']);
+
+Route::get('/logout', [CustomAuthController::class, 'logout'])->name('logout');

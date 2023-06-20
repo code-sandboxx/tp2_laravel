@@ -14,12 +14,27 @@
 
     <nav class="navbar primary-bg-color-green navbar-expand-lg">
         <div class="container-fluid">
-            <div class="navbar-nav flex-grow-1">
+            <div class="navbar-nav flex-grow-1 d-flex justify-content-between">
+                <div class="d-flex">
                     <a href="/" class="nav-link fw-bold pl-3">Accueil</a>
                     <a href="{{route('etudiant.index')}}" class="nav-link fw-bold pl-3">Étudiants</a>
+                    <a href="{{route('etudiant.index')}}" class="nav-link fw-bold pl-3">Articles</a>
+                </div>
+
+                <div class="d-flex">
+
+                    @if(Auth::check())
+                        <a href="/logout" class="nav-link fw-bold pl-3">Déconnexion</a>
+                    @else
+                        <a href="/login" class="nav-link fw-bold pl-3">Connexion</a>
+                        <a href="/registration" class="nav-link fw-bold pl-3">Inscription</a>  
+                    @endif
+
+                </div>         
+
             </div>
         </div> 
-    </nav>   
+    </nav>
 
     <div class="row d-flex mt-5 pt-5 justify-content-center">
         <div class="mt-5">

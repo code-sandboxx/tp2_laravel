@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Etudiant;
+use App\Models\User;
 use App\Models\Ville;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EtudiantController extends Controller
 {
@@ -15,9 +17,11 @@ class EtudiantController extends Controller
      */
     public function index()
     {
-        $etudiants = Etudiant::orderBy('nom', 'asc')->get();
-        
-        return view('etudiant.index', ['etudiants' => $etudiants]);
+        if(Auth::check()){
+            $etudiants = User::with('etudiant')->orderBy('name', 'asc')->get();
+            return view('etudiant.index', ['etudiants' => $etudiants]);
+        }   
+        return redirect(route('login'))->withErrors('Vous n\'êtes pas autorisé à accéder cette page. Veuillez-vous connecter');        
     }
 
     /**

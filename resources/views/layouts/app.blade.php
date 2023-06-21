@@ -18,16 +18,17 @@
                 <div class="d-flex">
                     <a href="/" class="nav-link fw-bold pl-3">Accueil</a>
                     <a href="{{route('etudiant.index')}}" class="nav-link fw-bold pl-3">Étudiants</a>
-                    <a href="{{route('etudiant.index')}}" class="nav-link fw-bold pl-3">Articles</a>
+                    <a href="{{route('post.index')}}" class="nav-link fw-bold pl-3">Forum</a>
                 </div>
 
                 <div class="d-flex">
 
                     @if(Auth::check())
-                        <a href="/logout" class="nav-link fw-bold pl-3">Déconnexion</a>
+                        <span class="nav-link fw-bold pl-3 text-primary">Bonjour, {{ Auth::user()->name }}</span>
+                        <a href="{{route('logout')}}" class="nav-link fw-bold pl-3 color-brown">Déconnexion</a>
                     @else
-                        <a href="/login" class="nav-link fw-bold pl-3">Connexion</a>
-                        <a href="/registration" class="nav-link fw-bold pl-3">Inscription</a>  
+                        <a href="{{route('login')}}" class="nav-link fw-bold pl-3">Connexion</a>
+                        <a href="{{route('user.registration')}}" class="nav-link fw-bold pl-3">Inscription</a>  
                     @endif
 
                 </div>         

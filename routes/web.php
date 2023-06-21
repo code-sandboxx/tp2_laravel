@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EtudiantController;
 use App\Http\Controllers\CustomAuthController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,3 +43,15 @@ Route::get('/registration', [CustomAuthController::class, 'create'])->name('user
 Route::post('/registration', [CustomAuthController::class, 'store']);
 
 Route::get('/logout', [CustomAuthController::class, 'logout'])->name('logout');
+
+Route::get('/posts', [PostController::class, 'index'])->name('post.index')->middleware('auth');
+
+Route::get('post-create', [PostController::class, 'create'])->name('post.create')->middleware('auth');
+
+Route::get('posts/{post}', [PostController::class, 'show'])->name('post.show')->middleware('auth');
+
+Route::get('post-edit/{post}', [PostController::class, 'edit'])->name('post.edit')->middleware('auth');
+
+Route::put('post-edit/{post}', [PostController::class, 'update'])->middleware('auth');
+
+Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.delete')->middleware('auth');

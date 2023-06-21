@@ -7,11 +7,8 @@
                 <p>
                     <h2 class="color-brown">Consulter la liste d'étudiants du Collège Maisonneuve</h2>
                 </p>
-                @if(Auth::check())
-                    <a href="{{ route('etudiant.index') }}" class="btn btn-success btn-lg fw-bold mt-3">Afficher la liste</a>
-                @else
-                    <a href="{{ route('login') }}" class="btn btn-success btn-lg fw-bold mt-3">Afficher la liste</a>
-                @endif
+               
+                <a href="{{ route('etudiant.index') }}" class="btn btn-success btn-lg fw-bold mt-3">Afficher la liste</a>              
 
             </div>
         </div>

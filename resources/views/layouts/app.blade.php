@@ -7,28 +7,35 @@
     <title>@yield('title')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    
+    <script src="{{ asset('js/custom.js') }}"></script> 
+    <!--CDN mdbootstrap-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css" rel="stylesheet">   
 
 </head>
 <body class="background w-100">
-
     <nav class="navbar primary-bg-color-green navbar-expand-lg">
         <div class="container-fluid">
+        @php $language = session('locale') @endphp
             <div class="navbar-nav flex-grow-1 d-flex justify-content-between">
                 <div class="d-flex">
-                    <a href="/" class="nav-link fw-bold pl-3">Accueil</a>
-                    <a href="{{route('etudiant.index')}}" class="nav-link fw-bold pl-3">Étudiants</a>
-                    <a href="{{route('post.index')}}" class="nav-link fw-bold pl-3">Forum</a>
+                    <a href="/" class="nav-link fw-bold pl-3">@lang('lang.nav_homepage')</a>
+                    <a href="{{route('etudiant.index')}}" class="nav-link fw-bold pl-3">@lang('lang.nav_students')</a>
+                    <a href="{{route('post.index')}}" class="nav-link fw-bold pl-3">@lang('lang.nav_forum')</a>
+
+                    <a class="nav-link fw-bold pl-3 color-brown @if($language == 'fr') text-info @endif" href="{{route('lang', 'fr')}}">@lang('lang.nav_french')<i class='flag flag-france'></i></a>
+
+                    <a class="nav-link fw-bold pl-3 color-brown @if($language == 'en') text-info @endif" href="{{route('lang', 'en')}}">@lang('lang.nav_english')<i class='flag flag-united-states'></i></a>
+
                 </div>
 
                 <div class="d-flex">
 
                     @if(Auth::check())
-                        <span class="nav-link fw-bold pl-3 text-primary">Bonjour, {{ Auth::user()->name }}</span>
-                        <a href="{{route('logout')}}" class="nav-link fw-bold pl-3 color-brown">Déconnexion</a>
+                        <span class="nav-link fw-bold pl-3 text-primary">@lang('lang.auth_greeting'), {{ Auth::user()->name }}</span>
+                        <a href="{{route('logout')}}" class="nav-link fw-bold pl-3 color-brown">@lang('lang.auth_logout')</a>
                     @else
-                        <a href="{{route('login')}}" class="nav-link fw-bold pl-3">Connexion</a>
-                        <a href="{{route('user.registration')}}" class="nav-link fw-bold pl-3">Inscription</a>  
+                        <a href="{{route('login')}}" class="nav-link fw-bold pl-3">@lang('lang.auth_login')</a>
+                        <a href="{{route('user.registration')}}" class="nav-link fw-bold pl-3">@lang('lang.auth_registration')</a>  
                     @endif
 
                 </div>         

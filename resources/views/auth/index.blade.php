@@ -7,7 +7,7 @@
 
                 <div class="card">
                     <h3 class="card-header text-center">
-                        Login
+                        @lang('lang.auth_login')
                     </h3>
 
                     <div class="card-body">
@@ -27,7 +27,7 @@
                         <form action="{{route('login.authentication')}}" method="post">
                             @csrf
                             <div class="form-group mb-3">
-                                <input type="email" placeholder="email" class="form-control" name="email" value="{{old('email')}}">
+                                <input type="email" placeholder="@lang('lang.email_placeholder')" class="form-control" name="email" value="{{old('email')}}">
                                 @if ($errors->has('email'))
                                 <div class="text-danger mt-2">
                                     {{$errors->first('email')}}
@@ -35,7 +35,7 @@
                                 @endif
                             </div>
                             <div class="form-group mb-3">
-                                <input type="password" placeholder="password" class="form-control" name="password">
+                                <input type="password" placeholder="@lang('lang.password_placeholder')" class="form-control" name="password">
                                 @if ($errors->has('password'))
                                 <div class="text-danger mt-2">
                                     {{$errors->first('password')}}
@@ -43,7 +43,7 @@
                                 @endif
                             </div>
                             <div class="d-grid mx-auto">
-                                <input type="submit" value="Connecter" class="btn btn-dark btn-block">
+                                <input type="submit" value="@lang('lang.log_in_btn')" class="btn btn-dark btn-block">
                             </div>
                         </form>
                     </div>

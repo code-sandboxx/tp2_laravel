@@ -1,13 +1,13 @@
 @extends('layouts.app')
-@section('title', 'Informations personnelles')
-@section('titleHeader', 'Informations personnelles')
+@section('title', trans('lang.etu_show_info_text'))
+@section('titleHeader', trans('lang.etu_show_info_text'))
 @section('content')
 
 
 <div class="card m-5 col-10">
 
     <div class="card-header p-4">
-        <h4 class="fs-4 text-center">Etudiant numero {{$etudiant->id}}</h4>
+        <h4 class="fs-4 text-center">@lang('lang.etu_show_number') {{$etudiant->id}}</h4>
     </div>
 
     <div class="card-body p-5">
@@ -16,38 +16,38 @@
 
                 <div class="d-inline-flex justify-content-between mb-3">
 
-                    <a href="{{route('etudiant.index')}}" class="btn btn-outline-primary col-1">Retourner</a>
+                    <a href="{{route('etudiant.index')}}" class="btn btn-outline-primary col-2">@lang('lang.back_btn')</a>
                     
-                    <a href="{{route('etudiant.edit', $etudiant->id)}}" class="btn btn-success col-1">Modifier</a>  
+                    <a href="{{route('etudiant.edit', $etudiant->id)}}" class="btn btn-success col-2">@lang('lang.modify_btn')</a>  
                     
-                    <button type="button" class="btn btn-danger col-1" data-bs-toggle="modal" data-bs-target="#modalDelete">Effacer</button>
+                    <button type="button" class="btn btn-danger col-2" data-bs-toggle="modal" data-bs-target="#modalDelete">@lang('lang.delete_btn')</button>
                     
                 </div>    
 
                 <hr>
 
                 <p class="mt-5 mb-4">
-                    <strong>Nom :</strong> {{$etudiant->nom}}
+                    <strong>@lang('lang.name') :</strong> {{$etudiant->user->name}}
                 </p>                
 
                 <p>
-                    <strong>Date de naissance :</strong> {!! $etudiant->date_de_naissance !!}
+                    <strong>@lang('lang.dob') :</strong> {!! $etudiant->date_de_naissance !!}
                 </p>
                 
                 <p>
-                    <strong>Adresse :</strong> {!! $etudiant->adresse !!}
+                    <strong>@lang('lang.address') :</strong> {!! $etudiant->adresse !!}
                 </p>
                 
                 <p>
-                    <strong>Numero de téléphone :</strong> {!! $etudiant->phone !!}
+                    <strong>@lang('lang.phone') :</strong> {!! $etudiant->phone !!}
                 </p>
 
                 <p>
-                    <strong>Adresse courriel :</strong> {!! $etudiant->email !!}
+                    <strong>@lang('lang.email') :</strong> {!! $etudiant->user->email !!}
                 </p>
 
                 <p>
-                    <strong>Ville :</strong> {{ $etudiant->etudiantHasVille?->nom }}
+                    <strong>@lang('lang.city') :</strong> {{ $etudiant->etudiantHasVille?->nom }}
                 </p>
             
             <hr>
@@ -62,18 +62,18 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Effacer</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">@lang('lang.delete_btn')</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Voulez-vous vraiment effacer la donnée : {{ $etudiant->id}} ?
+        @lang('lang.etu_modal_message')
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@lang('lang.close_btn')</button>
         <form method="post">
                     @csrf
                     @method('delete')
-                    <input type="submit" value="Effacer" class="btn btn-danger">
+                    <input type="submit" value="@lang('lang.delete_btn')" class="btn btn-danger">
         </form>
       </div>
     </div>

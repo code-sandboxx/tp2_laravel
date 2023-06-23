@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Ville;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class EtudiantController extends Controller
 {
@@ -16,12 +17,9 @@ class EtudiantController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        if(Auth::check()){
-            $etudiants = User::with('etudiant')->orderBy('name', 'asc')->get();
-            return view('etudiant.index', ['etudiants' => $etudiants]);
-        }   
-        return redirect(route('login'))->withErrors('Vous n\'êtes pas autorisé à accéder cette page. Veuillez-vous connecter');        
+    {        
+        $etudiants = User::with('etudiant')->orderBy('name', 'asc')->get();
+        return view('etudiant.index', ['etudiants' => $etudiants]);
     }
 
     /**
@@ -43,17 +41,31 @@ class EtudiantController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $newEtudiant = Etudiant::create([
-            'nom' => $request->nom,
-            'adresse' => $request->adresse,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'date_de_naissance' => $request->date_de_naissance,
-            'ville_id' => $request->ville_id
+    {        
+        $request->validate([
+            'name' => 'required|string|min:2|max:50',
+            'email' => 'required|string|email|max:50|unique:users',
+            'password' => 'required|string|min:6|max:20',
+            'adresse' => 'required|string|max:255',
+            'phone' => 'required|digits:10',
+            'date_de_naissance' => 'required|date|before:2003-01-01',
+            'ville_id' => 'required|exists:villes,id',
         ]);
 
-        return redirect(route('etudiant.show', $newEtudiant->id));        
+        $user = new User;
+        $user->fill($request->all());
+        $user->password = Hash::make($request->password);
+        $user->save();       
+        $etudiant = new Etudiant;
+        $etudiant->user()->associate($user);
+        $etudiant->adresse = $request->adresse;
+        $etudiant->phone = $request->phone;
+        $etudiant->date_de_naissance = $request->date_de_naissance;
+        $etudiant->id = $user->id; 
+        $etudiant->ville_id = $request->ville_id; 
+        $etudiant->save();        
+
+        return redirect(route('etudiant.show', $user->id));        
     }
 
     /**
@@ -88,16 +100,37 @@ class EtudiantController extends Controller
      */
     public function update(Request $request, Etudiant $etudiant)
     {
-        $etudiant->update([
-            'nom' => $request->nom,
-            'adresse' => $request->adresse,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'date_de_naissance' => $request->date_de_naissance,
-            'ville_id' => $request->ville_id
+        $request->validate([
+            'name' => 'required|string|min:2|max:50',
+            'email' => 'required|string|email|max:50|unique:users',
+            'password' => 'required|string|min:6|max:20',
+            'adresse' => 'required|string|max:255',
+            'phone' => 'required|digits:10',
+            'date_de_naissance' => 'required|date|before:2003-01-01',
+            'ville_id' => 'required|exists:villes,id',
         ]);
 
-        return redirect(route('etudiant.show', $etudiant));
+        $user = $etudiant->user; 
+    
+        $userData = [
+            'nom' => $request->nom,
+            'password' => Hash::make($request->password),
+        ];
+    
+        if ($request->email !== $user->email) {
+            $userData['email'] = $request->email;
+        }
+    
+        $user->update($userData);
+    
+        $etudiant->update([
+            'adresse' => $request->adresse,
+            'phone' => $request->phone,
+            'date_de_naissance' => $request->date_de_naissance,
+            'ville_id' => $request->ville_id,
+        ]);
+
+        return view ('etudiant.show', ['etudiant' => $etudiant]);
     }
 
     /**
@@ -108,7 +141,9 @@ class EtudiantController extends Controller
      */
     public function destroy(Etudiant $etudiant)
     {
-        $etudiant->delete();
+        $user = $etudiant->user; 
+        $etudiant->delete(); 
+        $user->delete(); 
         return redirect(route('etudiant.index'));
     }
 }

@@ -14,10 +14,29 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($language=null)
     {
-        $posts = Post::orderBy('created_at', 'desc')->get(); 
-        return view('post.index', ['posts' => $posts]);
+        $locale = app()->getLocale();
+    
+        $language = $locale;
+
+        //echo($locale);       
+
+     if($language === 'en') {
+            $posts = Post::whereNotNull('title_en')
+                         ->whereNotNull('body_en')
+                         ->orderBy('created_at', 'desc')
+                         ->get();
+        } elseif ($language === 'fr') {
+            $posts = Post::whereNotNull('title_fr')
+                         ->whereNotNull('body_fr')
+                         ->orderBy('created_at', 'desc')
+                         ->get();
+        } elseif ($language === 'en_fr') {
+            $posts = Post::orderBy('created_at', 'desc')->get();
+        }               
+
+        return view('post.index', ['posts' => $posts, 'language' => $language]);        
     }
 
     /**
@@ -25,9 +44,11 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($language = null)
     {
-        //
+        $post = new Post();
+        $language = app()->getLocale();
+        return view('post.create', compact('post', 'language'));
     }
 
     /**
@@ -36,9 +57,20 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $language = null)
     {
-        //
+        $post = new Post();
+        $language = $language ?? app()->getLocale();
+        $title = 'title_' . $language;
+        $body = 'body_' . $language;
+
+        $newPost = Post::create([
+            $title => $request->title,
+            $body => $request->body,      
+            'user_id' => Auth::user()->id
+        ]);
+
+        return redirect(route('post.show', [$newPost->id, $language]));
     }
 
     /**
@@ -47,9 +79,10 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Post $post, $language)
     {
-        return view ('post.show', ['post' => $post]);
+        $post->load('user');
+        return view('post.show', compact('post', 'language'));
     }
 
     /**
@@ -58,12 +91,16 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(Post $post, $language = null)
     {
+        $language = $language ?? app()->getLocale();
+        $title = ($language === 'en') ? $post->title_en : $post->title_fr;
+        $body = ($language === 'en') ? $post->body_en : $post->body_fr;
+
         if (Auth::id() !== $post->user_id) {            
             return redirect()->route('post.index')->with('error', 'Unauthorized access. Only the post author can modify the post');    
         }
-        return view('blog.edit', ['post' => $post]);
+        return view('post.edit', compact('post', 'title', 'body', 'language'));
     }    
 
     /**
@@ -75,7 +112,26 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title' => 'required|string',
+            'body' => 'required|string',
+        ]);    
+
+        $language = $request->input('language'); 
+    
+        if ($language === 'en') {
+            $post->update([
+                'title_en' => $request->input('title'),
+                'body_en' => $request->input('body')
+            ]);
+        } elseif ($language === 'fr') {
+            $post->update([
+                'title_fr' => $request->input('title'),
+                'body_fr' => $request->input('body')
+            ]);
+        }
+
+        return redirect(route('post.show', ['post' => $post, 'language' => $language]));
     }
 
     /**
